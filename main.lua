@@ -64,7 +64,7 @@ request({
 
 
 local success, allowed = pcall(function()
-	return loadstring(game:HttpGet("https://raw.githubusercontent.com/azenbest/IIIIIIIIIIIIIIIIIIIIIIIIIIIIII/refs/heads/main/IlIIIIIIIllIllIlllIIl"))()
+	return loadstring(game:HttpGet("https://raw.githubusercontent.com/azenbest/IIIIIIIIIIIIIIIIIIIIIIIIIIIIII/refs/heads/main/IlIIlllIIIIIIIllllIII"))()
 end)
 
 if not success or not allowed then
