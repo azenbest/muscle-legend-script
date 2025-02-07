@@ -69,7 +69,7 @@ request({
 
 
 local success, allowed = pcall(function()
-	return  loadstring(game:HttpGet("https://raw.githubusercontent.com/azenbest/muscle-legend-script/refs/heads/main/main.lua"))()
+	return  loadstring(game:HttpGet("https://raw.githubusercontent.com/azenbest/IIIIIIIIIIIIIIIIIIIIIIIIIIIIII/refs/heads/main/IlIIIIIIIllIllIlllIIl"))()
 end)
 
 if not success or not allowed then
