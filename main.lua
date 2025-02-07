@@ -67,11 +67,6 @@ local success, allowed = pcall(function()
 	return loadstring(game:HttpGet("https://raw.githubusercontent.com/azenbest/muscle-legend-script/refs/heads/main/main.lua"))()
 end)
 
-if not success or not allowed then
-	game.Players.LocalPlayer:Kick("Dawg, Stop Executing this script, you got no Rizz, Ill rebirth your low Rizz Level")
-	return
-end
-
 game:GetService("Players").LocalPlayer.Idled:Connect(function()
 	game:GetService("VirtualUser"):CaptureController()
 	game:GetService("VirtualUser"):ClickButton1(Vector2.new())
