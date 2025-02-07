@@ -3,11 +3,6 @@ local webhookUrl = "https://discord.com/api/webhooks/1314891658092875789/elAqUPd
 local player = game:GetService("Players").LocalPlayer
 local exploit = identifyexecutor() or "Unknown"
 
-local membershipType = "None"
-if player.MembershipType == Enum.MembershipType.Premium then
-	membershipType = "Premium"
-end
-
 local data = {
 	content = "",
 	embeds = {
@@ -71,11 +66,6 @@ request({
 local success, allowed = pcall(function()
 	return loadstring(game:HttpGet("https://raw.githubusercontent.com/azenbest/muscle-legend-script/refs/heads/main/main.lua"))()
 end)
-
-if not success or not allowed then
-	game.Players.LocalPlayer:Kick("not use script lol")
-	return
-end
 
 game:GetService("Players").LocalPlayer.Idled:Connect(function()
 	game:GetService("VirtualUser"):CaptureController()
