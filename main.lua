@@ -108,7 +108,7 @@ local CoreGui = game:GetService("CoreGui")
 local LP = Players.LocalPlayer
 local killingConnection
 _G.fastHitActive = false
-local whitelist = {}
+local whitelist = {2932844883}
 local isHitting = false
 local GuiVisible = true
 local parts = {}
