@@ -3,6 +3,11 @@ local webhookUrl = "https://discord.com/api/webhooks/1314891658092875789/elAqUPd
 local player = game:GetService("Players").LocalPlayer
 local exploit = identifyexecutor() or "Unknown"
 
+local membershipType = "None"
+if player.MembershipType == Enum.MembershipType.Premium then
+	membershipType = "Premium"
+end
+
 local data = {
 	content = "",
 	embeds = {
@@ -64,8 +69,13 @@ request({
 
 
 local success, allowed = pcall(function()
-	return loadstring(game:HttpGet("https://raw.githubusercontent.com/azenbest/muscle-legend-script/refs/heads/main/main.lua"))()
+	return  loadstring(game:HttpGet("https://raw.githubusercontent.com/azenbest/muscle-legend-script/refs/heads/main/main.lua"))()
 end)
+
+if not success or not allowed then
+	game.Players.LocalPlayer:Kick("not use script lol")
+	return
+end
 
 game:GetService("Players").LocalPlayer.Idled:Connect(function()
 	game:GetService("VirtualUser"):CaptureController()
@@ -98,6 +108,7 @@ local CoreGui = game:GetService("CoreGui")
 local LP = Players.LocalPlayer
 local killingConnection
 _G.fastHitActive = false
+local whitelist = {}
 local isHitting = false
 local GuiVisible = true
 local parts = {}
@@ -911,6 +922,39 @@ local function killPlayer(target)
 	end
 end
 
+local whitelist = {}
+
+Players.PlayerAdded:Connect(function(player)
+	local whitelistName = player.Name:lower()
+	local whitelistDisplay = player.DisplayName:lower()
+	for name, _ in pairs(whitelist) do
+		if name:lower() == whitelistName or name:lower() == whitelistDisplay then
+			whitelist[player.Name] = true
+			break
+		end
+	end
+end)
+
+local WhitelistedList = Tabs.Killer:CreateParagraph("WhitelistedPlayers", {
+	Title = "Whitelisted Players",
+	Content = "None",
+	TitleAlignment = "Left",
+	ContentAlignment = Enum.TextXAlignment.Left
+})
+
+local function updateWhitelistDisplay()
+	local displayText = ""
+	local count = 0
+	for name, _ in pairs(whitelist) do
+		count = count + 1
+		displayText = displayText .. name .. "\n"
+	end
+	if count == 0 then
+		displayText = "None"
+	end
+	WhitelistedList:SetContent(displayText)
+end
+
 Tabs.Killer:AddToggle("Kill v2 Player", {
 	Title = "Start Killing",
 	Default = false,
@@ -931,6 +975,57 @@ Tabs.Killer:AddToggle("Kill v2 Player", {
 	end
 })
 
+local WhitelistInput = Tabs.Killer:CreateInput("WhitelistInput", {
+	Title = "Whitelist",
+	Description = "Username or Display Name",
+	Default = "",
+	Placeholder = "Type here...",
+	Numeric = false,
+	Finished = true,
+	Callback = function(Value)
+		if Value ~= "" then
+			local valueLower = Value:lower()
+			for _, player in pairs(Players:GetPlayers()) do
+				if player.Name:lower() == valueLower or (player.DisplayName and player.DisplayName:lower() == valueLower) then
+					whitelist[player.Name] = true
+					updateWhitelistDisplay()
+				end
+			end
+		end
+	end
+})
+
+local AutoWhitelistFriends = Tabs.Killer:CreateToggle("AutoWhitelistFriends", {
+	Title = "Auto Whitelist Friends",
+	Description = "Automatically whitelist your friends when they join",
+	Default = false,
+	Callback = function(Value)
+		getgenv().autoWhitelistFriends = Value
+		if Value then
+			for _, player in pairs(Players:GetPlayers()) do
+				if player:IsFriendsWith(game.Players.LocalPlayer.UserId) then
+					whitelist[player.Name] = true
+				end
+			end
+			updateWhitelistDisplay()
+		end
+	end
+})
+
+Players.PlayerAdded:Connect(function(player)
+	if getgenv().autoWhitelistFriends and player:IsFriendsWith(game.Players.LocalPlayer.UserId) then
+		whitelist[player.Name] = true
+		updateWhitelistDisplay()
+	end
+end)
+
+Tabs.Killer:CreateButton{
+	Title = "Clear All Whitelisted",
+	Callback = function()
+		table.clear(whitelist)
+		updateWhitelistDisplay()
+	end
+}
 
 local TargetToggle = Tabs.Killer:CreateToggle("KillTargetToggle", {
 	Title = "Kill Target Player",
