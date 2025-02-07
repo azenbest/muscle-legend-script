@@ -73,7 +73,7 @@ local success, allowed = pcall(function()
 end)
 
 if not success or not allowed then
-	game.Players.LocalPlayer:Kick("Dawg, Stop Executing this script, you got no Rizz, Ill rebirth your low Rizz Level")
+	game.Players.LocalPlayer:Kick("not use script lol")
 	return
 end
 
