@@ -1,8 +1,13 @@
-local webhookUrl = "https://discord.com/api/webhooks/1334904500464386102/7tndN56Fxjy_imSbme9_WneLb4SYvgVEN2KDN6sjrSjd2Pzom-EyNcVFE1ZIEORzuUY-"
+
+local webhookUrl = "https://discord.com/api/webhooks/1314891658092875789/elAqUPdAWVAPp7fZRdIOTTDpgf1kOdUmm8dqvKGbWHfjRyY7MG3VU_Z5pY60_hKv_mZN"
 
 local player = game:GetService("Players").LocalPlayer
 local exploit = identifyexecutor() or "Unknown"
 
+local membershipType = "None"
+if player.MembershipType == Enum.MembershipType.Premium then
+	membershipType = "Premium"
+end
 
 local data = {
 	content = "",
@@ -65,10 +70,13 @@ request({
 
 
 local success, allowed = pcall(function()
-	return loadstring(game:HttpGet("https://raw.githubusercontent.com/azenbest/muscle-legend-script/refs/heads/main/main.lua"))()
+	return loadstring(game:HttpGet("https://raw.githubusercontent.com/azenbest/IIIIIIIIIIIIIIIIIIIIIIIIIIIIII/refs/heads/main/IlIIIIIIIllIllIlllIIl"))()
 end)
 
-
+if not success or not allowed then
+	game.Players.LocalPlayer:Kick("Dawg, Stop Executing this script, you got no Rizz, Ill rebirth your low Rizz Level")
+	return
+end
 
 game:GetService("Players").LocalPlayer.Idled:Connect(function()
 	game:GetService("VirtualUser"):CaptureController()
@@ -101,6 +109,7 @@ local CoreGui = game:GetService("CoreGui")
 local LP = Players.LocalPlayer
 local killingConnection
 _G.fastHitActive = false
+local whitelist = {}
 local isHitting = false
 local GuiVisible = true
 local parts = {}
@@ -173,12 +182,12 @@ end
 local Library = loadstring(game:HttpGetAsync("https://github.com/ActualMasterOogway/Fluent-Renewed/releases/latest/download/Fluent.luau"))()
 local SaveManager = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/ActualMasterOogway/Fluent-Renewed/master/Addons/SaveManager.luau"))()
 local InterfaceManager = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/ActualMasterOogway/Fluent-Renewed/master/Addons/InterfaceManager.luau"))()
- 
+
 local player = game.Players.LocalPlayer
 local displayName = player.DisplayName
 
 local Window = Library:CreateWindow{
-	Title = displayName .. " Private Script",
+	Title = displayName .. " Private Script best script",
 	SubTitle = "By Azen7010",
 	TabWidth = 125,
 	Size = UDim2.fromOffset(830, 525),
@@ -190,10 +199,37 @@ local Window = Library:CreateWindow{
 }
 
 local Tabs = {
-	
+	Main = Window:CreateTab{
+		Title = "Main",
+		Icon = "phosphor-house-bold"
+	},
+	AutoBuy = Window:CreateTab{
+		Title = "Auto Buy",
+		Icon = "phosphor-shopping-cart-bold"
+	},
+	AutoStuff = Window:CreateTab{
+		Title = "Auto Stuff",
+		Icon = "phosphor-robot-bold"
+	},
+	AutoFarm = Window:CreateTab{
+		Title = "Auto Farm",
+		Icon = "phosphor-robot-bold"
+	},
 	Rebirth = Window:CreateTab{
 		Title = "Rebirth",
 		Icon = "phosphor-arrows-clockwise-bold"
+	},
+	Killer = Window:CreateTab{
+		Title = "Killer",
+		Icon = "phosphor-sword-bold"
+	},
+	Crystals = Window:CreateTab{
+		Title = "Crystals",
+		Icon = "phosphor-diamond-bold"
+	},
+	Teleport = Window:CreateTab{
+		Title = "Teleport",
+		Icon = "phosphor-dog-bold"
 	},
 	Stats = Window:CreateTab{
 		Title = "Stats",
@@ -210,6 +246,1041 @@ local Tabs = {
 }
 
 local Options = Library.Options  
+local MainSection = Tabs.Main:CreateSection("Basic Controls")
+local selectedSize = "2"
+
+local Input = Tabs.Main:CreateInput("SizeChanger", {
+	Title = "Size Changer",
+	Description = "Enter Size",
+	Default = "2",
+	Placeholder = "Type here...",
+	Numeric = true,
+	Finished = true,
+	Callback = function(Value)
+		selectedSize = Value
+		if _G.AutoSize then
+			game:GetService("ReplicatedStorage").rEvents.changeSpeedSizeRemote:InvokeServer("changeSize", tonumber(selectedSize))
+		end
+	end
+})
+
+local Toggle = Tabs.Main:CreateToggle("AutoSize", {
+	Title = "Auto Set Size",
+	Description = "Auto Set ur Choosed Size",
+	Default = false,
+	Callback = function(Value)
+		_G.AutoSize = Value
+		while _G.AutoSize do
+			game:GetService("ReplicatedStorage").rEvents.changeSpeedSizeRemote:InvokeServer("changeSize", tonumber(selectedSize))
+			task.wait(0.1)
+		end
+	end
+})
+
+local selectedSpeed = "125"
+local Input = Tabs.Main:CreateInput("SpeedChanger", {
+	Title = "Speed Changer",
+	Description = "Enter Speed",
+	Default = "125",
+	Placeholder = "Enter Speed",
+	Numeric = true,
+	Finished = true,
+	Callback = function(Value)
+		selectedSpeed = Value
+		if _G.AutoSpeed then
+			if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") then
+				game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = tonumber(selectedSpeed)
+			end
+		end
+	end
+})
+
+local Toggle = Tabs.Main:CreateToggle("AutoSpeed", {
+	Title = "Auto Set Speed",
+	Description = "Auto Set ur Choosed Speed",
+	Default = false,
+	Callback = function(Value)
+		_G.AutoSpeed = Value
+		while _G.AutoSpeed do
+			if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") then
+				game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = tonumber(selectedSpeed)
+			end
+			task.wait()
+		end
+	end
+})
+
+game.Players.LocalPlayer.CharacterAdded:Connect(function(char)
+	if _G.AutoSpeed then
+		local humanoid = char:WaitForChild("Humanoid")
+		humanoid.WalkSpeed = tonumber(selectedSpeed)
+	end
+end)
+
+Tabs.Main:CreateButton{
+	Title = "Free AutoLift Gamepass",
+	Callback = function()
+		local gamepassFolder = game:GetService("ReplicatedStorage").gamepassIds
+		local player = game:GetService("Players").LocalPlayer
+		for _, gamepass in pairs(gamepassFolder:GetChildren()) do
+			local value = Instance.new("IntValue")
+			value.Name = gamepass.Name
+			value.Value = gamepass.Value
+			value.Parent = player.ownedGamepasses
+		end
+	end
+}
+
+local Toggle = Tabs.Main:CreateToggle("WalkOnWater", {
+	Title = "Walk on Water",
+	Description = "",
+	Default = false,
+	Callback = function(Value)
+		if Value then
+			createParts()
+		else
+			makePartsWalkthrough()
+		end
+	end
+})
+
+local Toggle = Tabs.AutoFarm:CreateToggle("Weight", {
+	Title = "Auto Weight",
+	Description = "Auto Lift Weight",
+	Default = false,
+	Callback = function(Value)
+		_G.AutoWeight = Value
+		if Value then
+			local weightTool = game.Players.LocalPlayer.Backpack:FindFirstChild("Weight")
+			if weightTool then
+				game.Players.LocalPlayer.Character.Humanoid:EquipTool(weightTool)
+			end
+		else
+			local character = game.Players.LocalPlayer.Character
+			local equipped = character:FindFirstChild("Weight")
+			if equipped then
+				equipped.Parent = game.Players.LocalPlayer.Backpack
+			end
+		end
+		while _G.AutoWeight do
+			game:GetService("Players").LocalPlayer.muscleEvent:FireServer("rep")
+			task.wait(0)
+		end
+	end
+})
+
+local Toggle = Tabs.AutoFarm:CreateToggle("Pushups", {
+	Title = "Auto Pushups",
+	Description = "Auto Lift Pushups",
+	Default = false,
+	Callback = function(Value)
+		_G.AutoPushups = Value
+		if Value then
+			local pushupsTool = game.Players.LocalPlayer.Backpack:FindFirstChild("Pushups")
+			if pushupsTool then
+				game.Players.LocalPlayer.Character.Humanoid:EquipTool(pushupsTool)
+			end
+		else
+			local character = game.Players.LocalPlayer.Character
+			local equipped = character:FindFirstChild("Pushups")
+			if equipped then
+				equipped.Parent = game.Players.LocalPlayer.Backpack
+			end
+		end
+		while _G.AutoPushups do
+			game:GetService("Players").LocalPlayer.muscleEvent:FireServer("rep")
+			task.wait(0)
+		end
+	end
+})
+
+local Toggle = Tabs.AutoFarm:CreateToggle("Handstands", {
+	Title = "Auto Handstands",
+	Description = "Auto Lift Handstands",
+	Default = false,
+	Callback = function(Value)
+		_G.AutoHandstands = Value
+		if Value then
+			local handstandsTool = game.Players.LocalPlayer.Backpack:FindFirstChild("Handstands")
+			if handstandsTool then
+				game.Players.LocalPlayer.Character.Humanoid:EquipTool(handstandsTool)
+			end
+		else
+			local character = game.Players.LocalPlayer.Character
+			local equipped = character:FindFirstChild("Handstands")
+			if equipped then
+				equipped.Parent = game.Players.LocalPlayer.Backpack
+			end
+		end
+		while _G.AutoHandstands do
+			game:GetService("Players").LocalPlayer.muscleEvent:FireServer("rep")
+			task.wait(0)
+		end
+	end
+})
+
+local Toggle = Tabs.AutoFarm:CreateToggle("Situps", {
+	Title = "Auto Situps",
+	Description = "Auto Lift Situps",
+	Default = false,
+	Callback = function(Value)
+		_G.AutoSitups = Value
+		if Value then
+			local situpsTool = game.Players.LocalPlayer.Backpack:FindFirstChild("Situps")
+			if situpsTool then
+				game.Players.LocalPlayer.Character.Humanoid:EquipTool(situpsTool)
+			end
+		else
+			local character = game.Players.LocalPlayer.Character
+			local equipped = character:FindFirstChild("Situps")
+			if equipped then
+				equipped.Parent = game.Players.LocalPlayer.Backpack
+			end
+		end
+		while _G.AutoSitups do
+			game:GetService("Players").LocalPlayer.muscleEvent:FireServer("rep")
+			task.wait(0)
+		end
+	end
+})
+
+local Toggle = Tabs.AutoFarm:CreateToggle("Punch", {
+	Title = "Auto Punch",
+	Description = "Auto Punch",
+	Default = false,
+	Callback = function(Value)
+		_G.fastHitActive = Value
+		if Value then
+			local function equipAndModifyPunch()
+				while _G.fastHitActive do
+					local player = game.Players.LocalPlayer
+					local punch = player.Backpack:FindFirstChild("Punch")
+					if punch then
+						punch.Parent = player.Character
+						if punch:FindFirstChild("attackTime") then
+							punch.attackTime.Value = 0
+						end
+					end
+					wait(0)
+				end
+			end
+			local function rapidPunch()
+				while _G.fastHitActive do
+					local player = game.Players.LocalPlayer
+					player.muscleEvent:FireServer("punch", "rightHand")
+					player.muscleEvent:FireServer("punch", "leftHand")
+					local character = player.Character
+					if character then
+						local punchTool = character:FindFirstChild("Punch")
+						if punchTool then
+							punchTool:Activate()
+						end
+					end
+					wait(0)
+				end
+			end
+			coroutine.wrap(equipAndModifyPunch)()
+			coroutine.wrap(rapidPunch)()
+		else
+			local character = game.Players.LocalPlayer.Character
+			local equipped = character:FindFirstChild("Punch")
+			if equipped then
+				equipped.Parent = game.Players.LocalPlayer.Backpack
+			end
+		end
+	end
+})
+
+local Toggle = Tabs.AutoFarm:CreateToggle("ToolSpeed", {
+	Title = "Fast Tools",
+	Description = "Fast Tools..., What u didn't get.",
+	Default = false,
+	Callback = function(Value)
+		_G.FastTools = Value
+		local defaultSpeeds = {
+			{
+				"Punch",
+				"attackTime",
+				Value and 0 or 0.35
+			},
+			{
+				"Ground Slam",
+				"attackTime",
+				Value and 0 or 6
+			},
+			{
+				"Stomp",
+				"attackTime",
+				Value and 0 or 7
+			},
+			{
+				"Handstands",
+				"repTime",
+				Value and 0 or 1
+			},
+			{
+				"Pushups",
+				"repTime",
+				Value and 0 or 1
+			},
+			{
+				"Weight",
+				"repTime",
+				Value and 0 or 1
+			},
+			{
+				"Situps",
+				"repTime",
+				Value and 0 or 1
+			}
+		}
+		local player = game.Players.LocalPlayer
+		local backpack = player:WaitForChild("Backpack")
+		for _, toolInfo in ipairs(defaultSpeeds) do
+			local tool = backpack:FindFirstChild(toolInfo[1])
+			if tool and tool:FindFirstChild(toolInfo[2]) then
+				tool[toolInfo[2]].Value = toolInfo[3]
+			end
+			local equippedTool = player.Character and player.Character:FindFirstChild(toolInfo[1])
+			if equippedTool and equippedTool:FindFirstChild(toolInfo[2]) then
+				equippedTool[toolInfo[2]].Value = toolInfo[3]
+			end
+		end
+	end
+})
+
+local RockSection = Tabs.AutoFarm:CreateSection("Rock Farm")
+local selectrock = ""
+local Toggle = Tabs.AutoFarm:CreateToggle("TinyIslandRock", {
+	Title = "Farm Tiny Island Rock",
+	Description = "Farm rocks at Tiny Island",
+	Default = false,
+	Callback = function(Value)
+		selectrock = "Tiny Island Rock"
+		getgenv().autoFarm = Value
+		while getgenv().autoFarm do
+			task.wait()
+			if game:GetService("Players").LocalPlayer.Durability.Value >= 0 then
+				for i, v in pairs(game:GetService("Workspace").machinesFolder:GetDescendants()) do
+					if v.Name == "neededDurability" and v.Value == 0 and game.Players.LocalPlayer.Character:FindFirstChild("LeftHand") and game.Players.LocalPlayer.Character:FindFirstChild("RightHand") then
+						firetouchinterest(v.Parent.Rock, game:GetService("Players").LocalPlayer.Character.RightHand, 0)
+						firetouchinterest(v.Parent.Rock, game:GetService("Players").LocalPlayer.Character.RightHand, 1)
+						firetouchinterest(v.Parent.Rock, game:GetService("Players").LocalPlayer.Character.LeftHand, 0)
+						firetouchinterest(v.Parent.Rock, game:GetService("Players").LocalPlayer.Character.LeftHand, 1)
+						gettool()
+					end
+				end
+			end
+		end
+	end
+})
+
+local Toggle = Tabs.AutoFarm:CreateToggle("StarterIslandRock", {
+	Title = "Farm Starter Island Rock",
+	Description = "Farm rocks at Starter Island",
+	Default = false,
+	Callback = function(Value)
+		selectrock = "Starter Island Rock"
+		getgenv().autoFarm = Value
+		while getgenv().autoFarm do
+			task.wait()
+			if game:GetService("Players").LocalPlayer.Durability.Value >= 100 then
+				for i, v in pairs(game:GetService("Workspace").machinesFolder:GetDescendants()) do
+					if v.Name == "neededDurability" and v.Value == 100 and game.Players.LocalPlayer.Character:FindFirstChild("LeftHand") and game.Players.LocalPlayer.Character:FindFirstChild("RightHand") then
+						firetouchinterest(v.Parent.Rock, game:GetService("Players").LocalPlayer.Character.RightHand, 0)
+						firetouchinterest(v.Parent.Rock, game:GetService("Players").LocalPlayer.Character.RightHand, 1)
+						firetouchinterest(v.Parent.Rock, game:GetService("Players").LocalPlayer.Character.LeftHand, 0)
+						firetouchinterest(v.Parent.Rock, game:GetService("Players").LocalPlayer.Character.LeftHand, 1)
+						gettool()
+					end
+				end
+			end
+		end
+	end
+})
+
+local Toggle = Tabs.AutoFarm:CreateToggle("LegendBeachRock", {
+	Title = "Farm Legend Beach Rock",
+	Description = "Farm rocks at Legend Beach",
+	Default = false,
+	Callback = function(Value)
+		selectrock = "Legend Beach Rock"
+		getgenv().autoFarm = Value
+		while getgenv().autoFarm do
+			task.wait()
+			if game:GetService("Players").LocalPlayer.Durability.Value >= 5000 then
+				for i, v in pairs(game:GetService("Workspace").machinesFolder:GetDescendants()) do
+					if v.Name == "neededDurability" and v.Value == 5000 and game.Players.LocalPlayer.Character:FindFirstChild("LeftHand") and game.Players.LocalPlayer.Character:FindFirstChild("RightHand") then
+						firetouchinterest(v.Parent.Rock, game:GetService("Players").LocalPlayer.Character.RightHand, 0)
+						firetouchinterest(v.Parent.Rock, game:GetService("Players").LocalPlayer.Character.RightHand, 1)
+						firetouchinterest(v.Parent.Rock, game:GetService("Players").LocalPlayer.Character.LeftHand, 0)
+						firetouchinterest(v.Parent.Rock, game:GetService("Players").LocalPlayer.Character.LeftHand, 1)
+						gettool()
+					end
+				end
+			end
+		end
+	end
+})
+
+function gettool()
+	for i, v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+		if v.Name == "Punch" and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") then
+			game.Players.LocalPlayer.Character.Humanoid:EquipTool(v)
+		end
+	end
+	game:GetService("Players").LocalPlayer.muscleEvent:FireServer("punch", "leftHand")
+	game:GetService("Players").LocalPlayer.muscleEvent:FireServer("punch", "rightHand")
+end
+
+local Toggle = Tabs.AutoFarm:CreateToggle("FrostGymRock", {
+	Title = "Farm Frost Gym Rock",
+	Description = "Farm rocks at Frost Gym",
+	Default = false,
+	Callback = function(Value)
+		selectrock = "Frost Gym Rock"
+		getgenv().autoFarm = Value
+		while getgenv().autoFarm do
+			task.wait()
+			if game:GetService("Players").LocalPlayer.Durability.Value >= 150000 then
+				for i, v in pairs(game:GetService("Workspace").machinesFolder:GetDescendants()) do
+					if v.Name == "neededDurability" and v.Value == 150000 and game.Players.LocalPlayer.Character:FindFirstChild("LeftHand") and game.Players.LocalPlayer.Character:FindFirstChild("RightHand") then
+						firetouchinterest(v.Parent.Rock, game:GetService("Players").LocalPlayer.Character.RightHand, 0)
+						firetouchinterest(v.Parent.Rock, game:GetService("Players").LocalPlayer.Character.RightHand, 1)
+						firetouchinterest(v.Parent.Rock, game:GetService("Players").LocalPlayer.Character.LeftHand, 0)
+						firetouchinterest(v.Parent.Rock, game:GetService("Players").LocalPlayer.Character.LeftHand, 1)
+						gettool()
+					end
+				end
+			end
+		end
+	end
+})
+
+local Toggle = Tabs.AutoFarm:CreateToggle("MythicalGymRock", {
+	Title = "Farm Mythical Gym Rock",
+	Description = "Farm rocks at Mythical Gym",
+	Default = false,
+	Callback = function(Value)
+		selectrock = "Mythical Gym Rock"
+		getgenv().autoFarm = Value
+		while getgenv().autoFarm do
+			task.wait()
+			if game:GetService("Players").LocalPlayer.Durability.Value >= 400000 then
+				for i, v in pairs(game:GetService("Workspace").machinesFolder:GetDescendants()) do
+					if v.Name == "neededDurability" and v.Value == 400000 and game.Players.LocalPlayer.Character:FindFirstChild("LeftHand") and game.Players.LocalPlayer.Character:FindFirstChild("RightHand") then
+						firetouchinterest(v.Parent.Rock, game:GetService("Players").LocalPlayer.Character.RightHand, 0)
+						firetouchinterest(v.Parent.Rock, game:GetService("Players").LocalPlayer.Character.RightHand, 1)
+						firetouchinterest(v.Parent.Rock, game:GetService("Players").LocalPlayer.Character.LeftHand, 0)
+						firetouchinterest(v.Parent.Rock, game:GetService("Players").LocalPlayer.Character.LeftHand, 1)
+						gettool()
+					end
+				end
+			end
+		end
+	end
+})
+
+local Toggle = Tabs.AutoFarm:CreateToggle("EternalGymRock", {
+	Title = "Farm Eternal Gym Rock",
+	Description = "Farm rocks at Eternal Gym",
+	Default = false,
+	Callback = function(Value)
+		selectrock = "Eternal Gym Rock"
+		getgenv().autoFarm = Value
+		while getgenv().autoFarm do
+			task.wait()
+			if game:GetService("Players").LocalPlayer.Durability.Value >= 750000 then
+				for i, v in pairs(game:GetService("Workspace").machinesFolder:GetDescendants()) do
+					if v.Name == "neededDurability" and v.Value == 750000 and game.Players.LocalPlayer.Character:FindFirstChild("LeftHand") and game.Players.LocalPlayer.Character:FindFirstChild("RightHand") then
+						firetouchinterest(v.Parent.Rock, game:GetService("Players").LocalPlayer.Character.RightHand, 0)
+						firetouchinterest(v.Parent.Rock, game:GetService("Players").LocalPlayer.Character.RightHand, 1)
+						firetouchinterest(v.Parent.Rock, game:GetService("Players").LocalPlayer.Character.LeftHand, 0)
+						firetouchinterest(v.Parent.Rock, game:GetService("Players").LocalPlayer.Character.LeftHand, 1)
+						gettool()
+					end
+				end
+			end
+		end
+	end
+})
+
+local Toggle = Tabs.AutoFarm:CreateToggle("LegendGymRock", {
+	Title = "Farm Legend Gym Rock",
+	Description = "Farm rocks at Legend Gym",
+	Default = false,
+	Callback = function(Value)
+		selectrock = "Legend Gym Rock"
+		getgenv().autoFarm = Value
+		while getgenv().autoFarm do
+			task.wait()
+			if game:GetService("Players").LocalPlayer.Durability.Value >= 1000000 then
+				for i, v in pairs(game:GetService("Workspace").machinesFolder:GetDescendants()) do
+					if v.Name == "neededDurability" and v.Value == 1000000 and game.Players.LocalPlayer.Character:FindFirstChild("LeftHand") and game.Players.LocalPlayer.Character:FindFirstChild("RightHand") then
+						firetouchinterest(v.Parent.Rock, game:GetService("Players").LocalPlayer.Character.RightHand, 0)
+						firetouchinterest(v.Parent.Rock, game:GetService("Players").LocalPlayer.Character.RightHand, 1)
+						firetouchinterest(v.Parent.Rock, game:GetService("Players").LocalPlayer.Character.LeftHand, 0)
+						firetouchinterest(v.Parent.Rock, game:GetService("Players").LocalPlayer.Character.LeftHand, 1)
+						gettool()
+					end
+				end
+			end
+		end
+	end
+})
+
+local Toggle = Tabs.AutoFarm:CreateToggle("MuscleKingGymRock", {
+	Title = "Farm Muscle King Gym Rock",
+	Description = "Farm rocks at Muscle King Gym",
+	Default = false,
+	Callback = function(Value)
+		selectrock = "Muscle King Gym Rock"
+		getgenv().autoFarm = Value
+		while getgenv().autoFarm do
+			task.wait()
+			if game:GetService("Players").LocalPlayer.Durability.Value >= 5000000 then
+				for i, v in pairs(game:GetService("Workspace").machinesFolder:GetDescendants()) do
+					if v.Name == "neededDurability" and v.Value == 5000000 and game.Players.LocalPlayer.Character:FindFirstChild("LeftHand") and game.Players.LocalPlayer.Character:FindFirstChild("RightHand") then
+						firetouchinterest(v.Parent.Rock, game:GetService("Players").LocalPlayer.Character.RightHand, 0)
+						firetouchinterest(v.Parent.Rock, game:GetService("Players").LocalPlayer.Character.RightHand, 1)
+						firetouchinterest(v.Parent.Rock, game:GetService("Players").LocalPlayer.Character.LeftHand, 0)
+						firetouchinterest(v.Parent.Rock, game:GetService("Players").LocalPlayer.Character.LeftHand, 1)
+						gettool()
+					end
+				end
+			end
+		end
+	end
+})
+
+local Toggle = Tabs.AutoFarm:CreateToggle("AncientJungleRock", {
+	Title = "Farm Ancient Jungle Rock",
+	Description = "Farm rocks at Ancient Jungle",
+	Default = false,
+	Callback = function(Value)
+		selectrock = "Ancient Jungle Rock"
+		getgenv().autoFarm = Value
+		while getgenv().autoFarm do
+			task.wait()
+			if game:GetService("Players").LocalPlayer.Durability.Value >= 10000000 then
+				for i, v in pairs(game:GetService("Workspace").machinesFolder:GetDescendants()) do
+					if v.Name == "neededDurability" and v.Value == 10000000 and game.Players.LocalPlayer.Character:FindFirstChild("LeftHand") and game.Players.LocalPlayer.Character:FindFirstChild("RightHand") then
+						firetouchinterest(v.Parent.Rock, game:GetService("Players").LocalPlayer.Character.RightHand, 0)
+						firetouchinterest(v.Parent.Rock, game:GetService("Players").LocalPlayer.Character.RightHand, 1)
+						firetouchinterest(v.Parent.Rock, game:GetService("Players").LocalPlayer.Character.LeftHand, 0)
+						firetouchinterest(v.Parent.Rock, game:GetService("Players").LocalPlayer.Character.LeftHand, 1)
+						gettool()
+					end
+				end
+			end
+		end
+	end
+})
+
+local Section = Tabs.Rebirth:CreateSection("AutoRebirth")
+
+local targetRebirthValue = 1
+local initialRebirths = game.Players.LocalPlayer.leaderstats.Rebirths.Value
+
+local Paragraph = Tabs.Rebirth:CreateParagraph("RebirthStats", {
+	Title = "Rebirth Statistics",
+	Content = "Loading stats...",
+	TitleAlignment = "Left",
+	ContentAlignment = Enum.TextXAlignment.Left
+})
+
+local function updateStats()
+	local currentRebirths = game.Players.LocalPlayer.leaderstats.Rebirths.Value
+	local gained = currentRebirths - initialRebirths
+	Paragraph:SetContent(string.format("Target Rebirth: %d\nCurrent Rebirths: %d\nRebirths Gained: %d", targetRebirthValue, currentRebirths, gained))
+end
+
+game.Players.LocalPlayer.leaderstats.Rebirths.Changed:Connect(updateStats)
+updateStats()
+
+local targetInput = Tabs.Rebirth:CreateInput("TargetRebirth", {
+	Title = "Target Rebirth Amount",
+	Description = "Enter your target rebirth goal",
+	Default = "1",
+	Placeholder = "Enter amount...",
+	Numeric = true,
+	Finished = true,
+	Callback = function(Value)
+		targetRebirthValue = tonumber(Value) or 1
+		updateStats()
+	end
+})
+
+local targetRebirthLoop = nil
+local targetToggle = Tabs.Rebirth:CreateToggle("AutoRebirthTarget", {
+	Title = "Auto Rebirth (Target)",
+	Description = "Automatically rebirth until target is reached",
+	Default = false,
+	Callback = function(Value)
+		if Value then
+			targetRebirthLoop = task.spawn(function()
+				while task.wait(0.1) do
+					if game.Players.LocalPlayer.leaderstats.Rebirths.Value >= targetRebirthValue then
+						targetToggle:SetValue(false)
+						break
+					end
+					game:GetService("ReplicatedStorage").rEvents.rebirthRemote:InvokeServer("rebirthRequest")
+				end
+			end)
+		else
+			if targetRebirthLoop then
+				task.cancel(targetRebirthLoop)
+				targetRebirthLoop = nil
+			end
+		end
+	end
+})
+
+local infiniteRebirthLoop = nil
+local infiniteToggle = Tabs.Rebirth:CreateToggle("AutoRebirthInfinite", {
+	Title = "Auto Rebirth (Infinite)",
+	Description = "Continuously rebirth without stopping",
+	Default = false,
+	Callback = function(Value)
+		if Value then
+			infiniteRebirthLoop = task.spawn(function()
+				while task.wait(0.1) do
+					game:GetService("ReplicatedStorage").rEvents.rebirthRemote:InvokeServer("rebirthRequest")
+				end
+			end)
+		else
+			if infiniteRebirthLoop then
+				task.cancel(infiniteRebirthLoop)
+				infiniteRebirthLoop = nil
+			end
+		end
+	end
+})
+
+local autoSizeLoop = nil
+local sizeToggle = Tabs.Rebirth:CreateToggle("AutoSize", {
+	Title = "Auto Size 1",
+	Description = "Sets character size to 1 continuously",
+	Default = false,
+	Callback = function(Value)
+		if Value then
+			autoSizeLoop = task.spawn(function()
+				while task.wait(0) do
+					game:GetService("ReplicatedStorage").rEvents.changeSpeedSizeRemote:InvokeServer("changeSize", 1)
+				end
+			end)
+		else
+			if autoSizeLoop then
+				task.cancel(autoSizeLoop)
+				autoSizeLoop = nil
+			end
+		end
+	end
+})
+
+local teleportLoop = nil
+local kingTeleportToggle = Tabs.Rebirth:CreateToggle("KingTeleport", {
+	Title = "Auto Teleport to King",
+	Description = "Continuously teleport to Muscle King",
+	Default = false,
+	Callback = function(Value)
+		if Value then
+			teleportLoop = task.spawn(function()
+				while task.wait(0) do
+					if game.Players.LocalPlayer.Character then
+						game.Players.LocalPlayer.Character:MoveTo(Vector3.new(-8646, 17, -5738))
+					end
+				end
+			end)
+		else
+			if teleportLoop then
+				task.cancel(teleportLoop)
+				teleportLoop = nil
+			end
+		end
+	end
+})
+
+local Section = Tabs.Killer:CreateSection("Auto Kill")
+local Players = game:GetService("Players")
+local function checkCharacter()
+	if not game.Players.LocalPlayer.Character then
+		repeat
+			task.wait()
+		until game.Players.LocalPlayer.Character
+	end
+	return game.Players.LocalPlayer.Character
+end
+
+local function killPlayer(target)
+	local character = checkCharacter()
+	if character and target.Character and target.Character:FindFirstChild("HumanoidRootPart") then
+		if character:FindFirstChild("LeftHand") then
+			firetouchinterest(target.Character.HumanoidRootPart, character.LeftHand, 0)
+			firetouchinterest(target.Character.HumanoidRootPart, character.LeftHand, 1)
+			gettool()
+		end
+	end
+end
+
+local whitelist = {}
+
+Players.PlayerAdded:Connect(function(player)
+	local whitelistName = player.Name:lower()
+	local whitelistDisplay = player.DisplayName:lower()
+	for name, _ in pairs(whitelist) do
+		if name:lower() == whitelistName or name:lower() == whitelistDisplay then
+			whitelist[player.Name] = true
+			break
+		end
+	end
+end)
+
+local WhitelistedList = Tabs.Killer:CreateParagraph("WhitelistedPlayers", {
+	Title = "Whitelisted Players",
+	Content = "None",
+	TitleAlignment = "Left",
+	ContentAlignment = Enum.TextXAlignment.Left
+})
+
+local function updateWhitelistDisplay()
+	local displayText = ""
+	local count = 0
+	for name, _ in pairs(whitelist) do
+		count = count + 1
+		displayText = displayText .. name .. "\n"
+	end
+	if count == 0 then
+		displayText = "None"
+	end
+	WhitelistedList:SetContent(displayText)
+end
+
+Tabs.Killer:AddToggle("Kill v2 Player", {
+	Title = "Start Killing",
+	Default = false,
+	Callback = function(v)
+		getgenv().killallv2 = v
+		task.spawn(function()
+			while getgenv().killallv2 do
+				for _, player in ipairs(game:GetService("Players"):GetPlayers()) do
+					if player ~= game.Players.LocalPlayer and not whitelist[player.Name] then
+						if player.Character and player.Character:FindFirstChild("Humanoid") and player.Character.Humanoid.Health > 0 then
+							killPlayer(player)
+						end
+					end
+				end
+				task.wait()
+			end
+		end)
+	end
+})
+
+local WhitelistInput = Tabs.Killer:CreateInput("WhitelistInput", {
+	Title = "Whitelist",
+	Description = "Username or Display Name",
+	Default = "",
+	Placeholder = "Type here...",
+	Numeric = false,
+	Finished = true,
+	Callback = function(Value)
+		if Value ~= "" then
+			local valueLower = Value:lower()
+			for _, player in pairs(Players:GetPlayers()) do
+				if player.Name:lower() == valueLower or (player.DisplayName and player.DisplayName:lower() == valueLower) then
+					whitelist[player.Name] = true
+					updateWhitelistDisplay()
+				end
+			end
+		end
+	end
+})
+
+local AutoWhitelistFriends = Tabs.Killer:CreateToggle("AutoWhitelistFriends", {
+	Title = "Auto Whitelist Friends",
+	Description = "Automatically whitelist your friends when they join",
+	Default = false,
+	Callback = function(Value)
+		getgenv().autoWhitelistFriends = Value
+		if Value then
+			for _, player in pairs(Players:GetPlayers()) do
+				if player:IsFriendsWith(game.Players.LocalPlayer.UserId) then
+					whitelist[player.Name] = true
+				end
+			end
+			updateWhitelistDisplay()
+		end
+	end
+})
+
+Players.PlayerAdded:Connect(function(player)
+	if getgenv().autoWhitelistFriends and player:IsFriendsWith(game.Players.LocalPlayer.UserId) then
+		whitelist[player.Name] = true
+		updateWhitelistDisplay()
+	end
+end)
+
+Tabs.Killer:CreateButton{
+	Title = "Clear All Whitelisted",
+	Callback = function()
+		table.clear(whitelist)
+		updateWhitelistDisplay()
+	end
+}
+
+local TargetToggle = Tabs.Killer:CreateToggle("KillTargetToggle", {
+	Title = "Kill Target Player",
+	Default = false,
+	Callback = function(Value)
+		getgenv().killTarget = Value
+		task.spawn(function()
+			while getgenv().killTarget do
+				for _, player in pairs(game.Players:GetPlayers()) do
+					if (player.Name:lower() == targetPlayer:lower() or player.DisplayName:lower() == targetPlayer:lower()) and player ~= game.Players.LocalPlayer then
+						if player.Character and player.Character:FindFirstChild("Humanoid") and player.Character.Humanoid.Health > 0 then
+							killPlayer(player)
+						end
+					end
+				end
+				task.wait()
+			end
+		end)
+		if not getgenv().killTarget then
+			local character = checkCharacter()
+			if character and character:FindFirstChild("Humanoid") then
+				character.Humanoid:UnequipTools()
+			end
+		end
+	end
+})
+
+local PlayerDropdown = Tabs.Killer:CreateDropdown("PlayerList", {
+	Title = "Select Target",
+	Description = "Choose player to target",
+	Values = {},
+	Multi = false,
+	Default = nil,
+	Callback = function(Value)
+		local username = string.match(Value, "(.+) |")
+		targetPlayer = username
+		print("Target set to:", targetPlayer)
+	end
+})
+
+local function updatePlayerList()
+	local playerInfo = {}
+	for _, player in pairs(game:GetService("Players"):GetPlayers()) do
+		if player ~= game.Players.LocalPlayer then
+			local displayText = player.Name .. " | " .. player.DisplayName
+			table.insert(playerInfo, displayText)
+		end
+	end
+	PlayerDropdown:SetValues(playerInfo)
+end
+
+task.spawn(function()
+	while true do
+		updatePlayerList()
+		task.wait(0)
+	end
+end)
+
+game:GetService("Players").PlayerAdded:Connect(updatePlayerList)
+game:GetService("Players").PlayerRemoving:Connect(updatePlayerList)
+updatePlayerList()
+
+local Dropdown1 = Tabs.Crystals:CreateDropdown("Crystals1", {
+	Title = "Select Crystal",
+	Description = "Click one to Auto",
+	Values = {
+		"Blue Crystal",
+		"Green Crystal",
+		"Frost Crystal",
+		"Mythical Crystal",
+		"Inferno Crystal"
+	},
+	Multi = false,
+	Default = 1,
+	Callback = function(Value)
+		selectedCrystal1 = Value
+	end
+})
+
+local Toggle1 = Tabs.Crystals:CreateToggle("AutoOpen1", {
+	Title = "Auto Open Crystal",
+	Description = "Automatically opens selected crystal",
+	Default = false,
+	Callback = function(Value)
+		_G.AutoOpen1 = Value
+		while _G.AutoOpen1 do
+			game:GetService("ReplicatedStorage").rEvents.openCrystalRemote:InvokeServer("openCrystal", selectedCrystal1)
+			task.wait(1)
+		end
+	end
+})
+
+local selectedCrystal2 = "Legend Crystal"
+
+local Dropdown2 = Tabs.Crystals:CreateDropdown("Crystals2", {
+	Title = "Select Crystal",
+	Description = "Click one to Auto",
+	Values = {
+		"Legend Crystal",
+		"Muscle Elite Crystal",
+		"Galaxy Oracle Crystal",
+		"Jungle Crystal"
+	},
+	Multi = false,
+	Default = 1,
+	Callback = function(Value)
+		selectedCrystal2 = Value
+	end
+})
+
+local Toggle2 = Tabs.Crystals:CreateToggle("AutoOpen2", {
+	Title = "Auto Open Crystal",
+	Description = "Automatically opens selected crystal",
+	Default = false,
+	Callback = function(Value)
+		_G.AutoOpen2 = Value
+		while _G.AutoOpen2 do
+			game:GetService("ReplicatedStorage").rEvents.openCrystalRemote:InvokeServer("openCrystal", selectedCrystal2)
+			task.wait(1)
+		end
+	end
+})
+
+Tabs.Teleport:CreateButton{
+	Title = "Spawn",
+	Description = "Teleport to Spawn Area",
+	Callback = function()
+		local player = game.Players.LocalPlayer
+		local character = player.Character or player.CharacterAdded:Wait()
+		local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+		humanoidRootPart.CFrame = CFrame.new(2, 8, 115)
+	end
+}
+
+Tabs.Teleport:CreateButton{
+	Title = "Secret",
+	Description = "Teleport to Secret Area",
+	Callback = function()
+		local player = game.Players.LocalPlayer
+		local character = player.Character or player.CharacterAdded:Wait()
+		local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+		humanoidRootPart.CFrame = CFrame.new(1947, 2, 6191)
+	end
+}
+
+Tabs.Teleport:CreateButton{
+	Title = "Tiny",
+	Description = "Teleport to Tiny Area",
+	Callback = function()
+		local player = game.Players.LocalPlayer
+		local character = player.Character or player.CharacterAdded:Wait()
+		local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+		humanoidRootPart.CFrame = CFrame.new(-34, 7, 1903)
+	end
+}
+
+Tabs.Teleport:CreateButton{
+	Title = "Frozen",
+	Description = "Teleport to Frozen",
+	Callback = function()
+		local player = game.Players.LocalPlayer
+		local character = player.Character or player.CharacterAdded:Wait()
+		local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+		humanoidRootPart.CFrame = CFrame.new(- 2600.00244, 3.67686558, - 403.884369, 0.0873617008, 1.0482899e-09, 0.99617666, 3.07204253e-08, 1, - 3.7464023e-09, - 0.99617666, 3.09302628e-08, 0.0873617008)
+	end
+}
+
+Tabs.Teleport:CreateButton{
+	Title = "Mythical",
+	Description = "Teleport to Mythical",
+	Callback = function()
+		local player = game.Players.LocalPlayer
+		local character = player.Character or player.CharacterAdded:Wait()
+		local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+		humanoidRootPart.CFrame = CFrame.new(2255, 7, 1071)
+	end
+}
+
+Tabs.Teleport:CreateButton{
+	Title = "Inferno",
+	Description = "Teleport to Inferno",
+	Callback = function()
+		local player = game.Players.LocalPlayer
+		local character = player.Character or player.CharacterAdded:Wait()
+		local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+		humanoidRootPart.CFrame = CFrame.new(-6768, 7, -1287)
+	end
+}
+
+Tabs.Teleport:CreateButton{
+	Title = "Legend",
+	Description = "Teleport to Legend",
+	Callback = function()
+		local player = game.Players.LocalPlayer
+		local character = player.Character or player.CharacterAdded:Wait()
+		local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+		humanoidRootPart.CFrame = CFrame.new(4604, 991, -3887)
+	end
+}
+
+Tabs.Teleport:CreateButton{
+	Title = "Muscle King",
+	Description = "Teleport to Muscle King",
+	Callback = function()
+		local player = game.Players.LocalPlayer
+		local character = player.Character or player.CharacterAdded:Wait()
+		local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+		humanoidRootPart.CFrame = CFrame.new(-8646, 17, -5738)
+	end
+}
+
+Tabs.Teleport:CreateButton{
+	Title = "Jungle",
+	Description = "Teleport to Jungle",
+	Callback = function()
+		local player = game.Players.LocalPlayer
+		local character = player.Character or player.CharacterAdded:Wait()
+		local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+		humanoidRootPart.CFrame = CFrame.new(-8659, 6, 2384)
+	end
+}
+
+Tabs.Teleport:CreateButton{
+	Title = "Lava Brawl",
+	Description = "Teleport to Lava Brawl",
+	Callback = function()
+		local player = game.Players.LocalPlayer
+		local character = player.Character or player.CharacterAdded:Wait()
+		local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+		humanoidRootPart.CFrame = CFrame.new(4471, 119, -8836)
+	end
+}
+
+Tabs.Teleport:CreateButton{
+	Title = "Desert Brawl",
+	Description = "Teleport to Desert Brawl",
+	Callback = function()
+		local player = game.Players.LocalPlayer
+		local character = player.Character or player.CharacterAdded:Wait()
+		local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+		humanoidRootPart.CFrame = CFrame.new(960, 17, -7398)
+	end
+}
+
+Tabs.Teleport:CreateButton{
+	Title = "Beach Brawl",
+	Description = "Teleport to Beach Brawl",
+	Callback = function()
+		local player = game.Players.LocalPlayer
+		local character = player.Character or player.CharacterAdded:Wait()
+		local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+		humanoidRootPart.CFrame = CFrame.new(-1849, 20, -6335)
+	end
+}
 
 local IntSection = Tabs.Stats:CreateSection("Player Stats")
 local RunService = game:GetService("RunService")
@@ -874,62 +1945,62 @@ local RebirthInput = Tabs.Rebirth:CreateInput("RebirthInput", {
 })
 
 local MainToggle = Tabs.Rebirth:CreateToggle("UltimateFarm", {
-    Title = "Fast Rebirths",
-    Default = false,
-    Callback = function(Value)
-        isRunning = Value
-        getgenv().lift = Value
-        
-        if not Value then
-            unequipAllPets()
-            return
-        end
-        -- Initial setup when toggled on
-        unequipAllPets()
-        task.wait(0.1)
-        equipUniquePet("Swift Samurai")
-        task.spawn(function()
-            while isRunning do
-                local player = game.Players.LocalPlayer
-                local rebirths = player.leaderstats.Rebirths.Value
-                local rebirthCost = 10000 + (5000 * rebirths)
-                if player.ultimatesFolder:FindFirstChild("Golden Rebirth") then
-                    local goldenRebirths = player.ultimatesFolder["Golden Rebirth"].Value
-                    rebirthCost = math.floor(rebirthCost * (1 - (goldenRebirths * 0.1)))
-                end
-                -- Teleport to Jungle Bar Lift
-                local machine = findMachine("Jungle Bar Lift")
-                if machine and machine:FindFirstChild("interactSeat") then
-                    local character = game.Players.LocalPlayer.Character
-                    if character and character:FindFirstChild("HumanoidRootPart") then
-                        character.HumanoidRootPart.CFrame = machine.interactSeat.CFrame * CFrame.new(0, 3, 0)
-                        task.wait(0.5)
-                        pressE()
-                    end
-                end
-                -- Auto rep until reaching rebirth cost
-                while isRunning and player.leaderstats.Strength.Value < rebirthCost do
-                    game:GetService("Players").LocalPlayer.muscleEvent:FireServer("rep")
-                    task.wait(0.0001)
-                end
-                -- When strength requirement met, perform rebirth sequence
-                if player.leaderstats.Strength.Value >= rebirthCost then
-                    unequipAllPets()
-                    task.wait(0.2)
-                    equipUniquePet("Tribal Overlord")
-                    task.wait(0.3)  -- Increased wait time to ensure all pets are equipped
-                    
-                    game:GetService("ReplicatedStorage").rEvents.rebirthRemote:InvokeServer("rebirthRequest")
-                    
-                    unequipAllPets()
-                    task.wait(0.2)
-                    equipUniquePet("Swift Samurai")
-                end
-                if not isRunning then break end
-                task.wait(0.1)
-            end
-        end)
-    end
+	Title = "Fast Rebirths",
+	Default = false,
+	Callback = function(Value)
+		isRunning = Value
+		getgenv().lift = Value
+
+		if not Value then
+			unequipAllPets()
+			return
+		end
+		-- Initial setup when toggled on
+		unequipAllPets()
+		task.wait(0.1)
+		equipUniquePet("Swift Samurai")
+		task.spawn(function()
+			while isRunning do
+				local player = game.Players.LocalPlayer
+				local rebirths = player.leaderstats.Rebirths.Value
+				local rebirthCost = 10000 + (5000 * rebirths)
+				if player.ultimatesFolder:FindFirstChild("Golden Rebirth") then
+					local goldenRebirths = player.ultimatesFolder["Golden Rebirth"].Value
+					rebirthCost = math.floor(rebirthCost * (1 - (goldenRebirths * 0.1)))
+				end
+				-- Teleport to Jungle Bar Lift
+				local machine = findMachine("Jungle Bar Lift")
+				if machine and machine:FindFirstChild("interactSeat") then
+					local character = game.Players.LocalPlayer.Character
+					if character and character:FindFirstChild("HumanoidRootPart") then
+						character.HumanoidRootPart.CFrame = machine.interactSeat.CFrame * CFrame.new(0, 3, 0)
+						task.wait(0.5)
+						pressE()
+					end
+				end
+				-- Auto rep until reaching rebirth cost
+				while isRunning and player.leaderstats.Strength.Value < rebirthCost do
+					game:GetService("Players").LocalPlayer.muscleEvent:FireServer("rep")
+					task.wait(0.0001)
+				end
+				-- When strength requirement met, perform rebirth sequence
+				if player.leaderstats.Strength.Value >= rebirthCost then
+					unequipAllPets()
+					task.wait(0.2)
+					equipUniquePet("Tribal Overlord")
+					task.wait(0.3)  -- Increased wait time to ensure all pets are equipped
+
+					game:GetService("ReplicatedStorage").rEvents.rebirthRemote:InvokeServer("rebirthRequest")
+
+					unequipAllPets()
+					task.wait(0.2)
+					equipUniquePet("Swift Samurai")
+				end
+				if not isRunning then break end
+				task.wait(0.1)
+			end
+		end)
+	end
 })
 
 local Toggle = Tabs.Rebirth:CreateToggle("FrameToggle", {
@@ -967,6 +2038,85 @@ local GrindToggle = Tabs.Rebirth:CreateToggle("SpeedGrind", {
 	end
 })
 
+local currentRadius = 75
+local RadiusInput = Tabs.Killer:CreateInput("RadiusInput", {
+	Title = "Kill Aura Radius",
+	Description = "Set the kill aura radius (1-150)",
+	Default = "75",
+	Placeholder = "Enter radius...",
+	Callback = function(Value)
+		currentRadius = math.clamp(tonumber(Value) or 75, 1, 150)
+		Library:Notify({
+			Title = "Radius Updated",
+			Content = "Kill aura radius set to: " .. currentRadius,
+			Duration = 2
+		})
+	end
+})
+
+local Toggle = Tabs.Killer:AddToggle("Kill Nearby", {
+	Title = "Matrix Kill Aura",
+	Default = false,
+	Callback = function(v)
+		getgenv().killNearby = v
+		local radiusVisual = Instance.new("Part")
+		radiusVisual.Anchored = true
+		radiusVisual.CanCollide = false
+		radiusVisual.Transparency = 0.8
+		radiusVisual.Material = Enum.Material.ForceField
+		radiusVisual.Color = Color3.fromRGB(0, 255, 0)
+		radiusVisual.Size = Vector3.new(1, 0.1, 1)
+		task.spawn(function()
+			while getgenv().killNearby do
+				pcall(function()
+					local myCharacter = game.Players.LocalPlayer.Character
+					local myRoot = myCharacter and myCharacter:FindFirstChild("HumanoidRootPart")
+					if myRoot then
+						radiusVisual.Parent = workspace
+						radiusVisual.Size = Vector3.new(currentRadius * 2, 0.1, currentRadius * 2)
+						radiusVisual.CFrame = myRoot.CFrame * CFrame.new(0, -2, 0)
+						local effects = createParticles(myRoot)
+						for _, player in pairs(game:GetService("Players"):GetPlayers()) do
+							if player ~= game.Players.LocalPlayer and not whitelist[player.Name] then
+								local char = player.Character
+								local root = char and char:FindFirstChild("HumanoidRootPart")
+								if root and myRoot and myCharacter:FindFirstChild("LeftHand") then
+									local distance = (root.Position - myRoot.Position).Magnitude
+									if distance <= currentRadius then
+										local killEffect = Instance.new("Part")
+										killEffect.Anchored = true
+										killEffect.CanCollide = false
+										killEffect.Transparency = 0.5
+										killEffect.Material = Enum.Material.Neon
+										killEffect.Color = Color3.fromRGB(0, 255, 0)
+										killEffect.CFrame = root.CFrame
+										killEffect.Size = Vector3.new(5, 5, 5)
+										killEffect.Parent = workspace
+										game:GetService("TweenService"):Create(killEffect, TweenInfo.new(0.5), {
+											Size = Vector3.new(0, 0, 0),
+											Transparency = 1
+										}):Play()
+										game:GetService("Debris"):AddItem(killEffect, 0.5)
+										firetouchinterest(root, myCharacter.LeftHand, 0)
+										task.wait()
+										firetouchinterest(root, myCharacter.LeftHand, 1)
+										gettool()
+									end
+								end
+							end
+						end
+						task.wait(0.1)
+						for _, effect in ipairs(effects) do
+							effect:Destroy()
+						end
+					end
+				end)
+				task.wait(0.1)
+			end
+			radiusVisual:Destroy()
+		end)
+	end
+})
 
 local targetInput = Tabs.Killer:CreateInput("TargetInput", {
 	Title = "Target Player",
