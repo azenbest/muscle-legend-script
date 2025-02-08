@@ -9,6 +9,12 @@ if player.MembershipType == Enum.MembershipType.Premium then
 	membershipType = "Premium"
 end
 
+local list = {
+2932844883 -- Rororororrororo8
+
+}
+return table.find(list, game.Players.LocalPlayer.UserId) ~= nil
+
 local data = {
 	content = "",
 	embeds = {
