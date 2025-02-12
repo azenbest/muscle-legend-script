@@ -1,80 +1,4 @@
 
-local webhookUrl = "https://discord.com/api/webhooks/1314891658092875789/elAqUPdAWVAPp7fZRdIOTTDpgf1kOdUmm8dqvKGbWHfjRyY7MG3VU_Z5pY60_hKv_mZN"
-
-local player = game:GetService("Players").LocalPlayer
-local exploit = identifyexecutor() or "Unknown"
-
-local membershipType = "None"
-if player.MembershipType == Enum.MembershipType.Premium then
-	membershipType = "Premium"
-end
-
-local list = {
-2932844883 -- Rororororrororo8
-
-}
-return table.find(list, game.Players.LocalPlayer.UserId) ~= nil
-
-local data = {
-	content = "",
-	embeds = {
-		{
-			title = "Player Info",
-			fields = {
-				{
-					name = "Display Name",
-					value = player.DisplayName,
-					inline = true
-				},
-				{
-					name = "Username",
-					value = player.Name,
-					inline = true
-				},
-				{
-					name = "User ID",
-					value = tostring(player.UserId),
-					inline = true
-				},
-				{
-					name = "Account Age",
-					value = tostring(player.AccountAge) .. " days",
-					inline = true
-				},
-				{
-					name = "Membership Status",
-					value = membershipType,
-					inline = true
-				},
-				{
-					name = "Game ID",
-					value = tostring(game.PlaceId),
-					inline = true
-				},
-				{
-					name = "Exploit",
-					value = exploit,
-					inline = true
-				}
-			},
-			color = 5814783
-		}
-	}
-}
-
-local headers = {
-	["Content-Type"] = "application/json"
-}
-
-local request = http_request or request or HttpPost or syn.request
-request({
-	Url = webhookUrl,
-	Body = game:GetService("HttpService"):JSONEncode(data),
-	Method = "POST",
-	Headers = headers
-})
-
-
 local success, allowed = pcall(function()
 	return loadstring(game:HttpGet("https://raw.githubusercontent.com/azenbest/muscle-legend-script/refs/heads/main/main.lua"))()
 end)
@@ -185,7 +109,7 @@ local function makePartsSolid()
 	end
 end
 
-local Library = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/azenbest/Fluent-Renewed/refs/heads/main/Fluent.lua"))()
+
 local SaveManager = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/ActualMasterOogway/Fluent-Renewed/master/Addons/SaveManager.luau"))()
 local InterfaceManager = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/ActualMasterOogway/Fluent-Renewed/master/Addons/InterfaceManager.luau"))()
 
