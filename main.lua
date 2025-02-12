@@ -76,7 +76,7 @@ request({
 
 
 local success, allowed = pcall(function()
-	return loadstring(game:HttpGet("https://raw.githubusercontent.com/azenbest/muscle-legend-script/refs/heads/main/main.lua"))()
+	return loadstring(game:HttpGet("https://raw.githubusercontent.com/azenbest/whitelist/refs/heads/main/IlIlIlIlIlIlIliLiLIlI"))()
 end)
 
 if not success or not allowed then
@@ -185,7 +185,7 @@ local function makePartsSolid()
 	end
 end
 
-local Library = loadstring(game:HttpGetAsync("https://github.com/ActualMasterOogway/Fluent-Renewed/releases/latest/download/Fluent.luau"))()
+local Library = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/azenbest/Fluent-Renewed/refs/heads/main/Fluent.lua"))()
 local SaveManager = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/ActualMasterOogway/Fluent-Renewed/master/Addons/SaveManager.luau"))()
 local InterfaceManager = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/ActualMasterOogway/Fluent-Renewed/master/Addons/InterfaceManager.luau"))()
 
